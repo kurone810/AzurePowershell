@@ -102,8 +102,8 @@ Connect-VMNetworkAdapter  $SiteA_vyos02_name -Name $INTNetworkAdapter01 -SwitchN
 
 Add-VMNetworkAdapter $SiteB_vyos01_name -Name $CORNetworkAdapter01
 Add-VMNetworkAdapter $SiteB_vyos01_name -Name $INTNetworkAdapter01
-Connect-VMNetworkAdapter  $SiteA_vyos02_name -Name $CORNetworkAdapter01 -SwitchName $CORSwitchname01
-Connect-VMNetworkAdapter  $SiteA_vyos02_name -Name $INTNetworkAdapter01 -SwitchName $siteB_INTSwitchname01
+Connect-VMNetworkAdapter  $SiteB_vyos02_name -Name $CORNetworkAdapter01 -SwitchName $CORSwitchname01
+Connect-VMNetworkAdapter  $SiteB_vyos02_name -Name $INTNetworkAdapter01 -SwitchName $siteB_INTSwitchname01
 
 
 Get-VM | Where-Object {$_.Name -like "*VyOS*"} | Start-VM
