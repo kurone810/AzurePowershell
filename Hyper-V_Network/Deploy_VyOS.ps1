@@ -52,15 +52,15 @@ New-VM -Name $Ex_vyos02_name -MemoryStartupBytes $init_External_vyosmemorySize `
 -VHDPath "$vhdpath$Ex_vyos02_name.vhdx" `
 -Generation 1 -BootDevice CD
 
-New-VM -Name $SiteA_vyos01_name -MemoryStartupBytes $init_External_vyosmemorySize `
+New-VM -Name $SiteA_vyos01_name -MemoryStartupBytes $init_Internal_vyosmemorySize `
 -VHDPath "$vhdpath$SiteA_vyos01_name.vhdx" `
 -Generation 1 -BootDevice CD
 
-New-VM -Name $SiteA_vyos02_name -MemoryStartupBytes $init_External_vyosmemorySize `
+New-VM -Name $SiteA_vyos02_name -MemoryStartupBytes $init_Internal_vyosmemorySize `
 -VHDPath "$vhdpath$SiteA_vyos02_name.vhdx" `
 -Generation 1 -BootDevice CD
 
-New-VM -Name $SiteB_vyos01_name -MemoryStartupBytes $init_External_vyosmemorySize `
+New-VM -Name $SiteB_vyos01_name -MemoryStartupBytes $init_Internal_vyosmemorySize `
 -VHDPath "$vhdpath$SiteB_vyos01_name.vhdx" `
 -Generation 1 -BootDevice CD
 
@@ -102,8 +102,8 @@ Connect-VMNetworkAdapter  $SiteA_vyos02_name -Name $INTNetworkAdapter01 -SwitchN
 
 Add-VMNetworkAdapter $SiteB_vyos01_name -Name $CORNetworkAdapter01
 Add-VMNetworkAdapter $SiteB_vyos01_name -Name $INTNetworkAdapter01
-Connect-VMNetworkAdapter  $SiteB_vyos02_name -Name $CORNetworkAdapter01 -SwitchName $CORSwitchname01
-Connect-VMNetworkAdapter  $SiteB_vyos02_name -Name $INTNetworkAdapter01 -SwitchName $siteB_INTSwitchname01
+Connect-VMNetworkAdapter  $SiteB_vyos01_name -Name $CORNetworkAdapter01 -SwitchName $CORSwitchname01
+Connect-VMNetworkAdapter  $SiteB_vyos01_name -Name $INTNetworkAdapter01 -SwitchName $siteB_INTSwitchname01
 
 
 Get-VM | Where-Object {$_.Name -like "*VyOS*"} | Start-VM
