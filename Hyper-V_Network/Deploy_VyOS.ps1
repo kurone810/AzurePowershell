@@ -1,9 +1,9 @@
 
 
 param(
-    #VYOS Deproy Parameters
+    #VYOS Deploy Parameters
     $vhdpath = "C:\Users\Public\Documents\Hyper-V\Virtual hard disks\",    
-    $vyosimagepath = "D:\OS\vyos-1.1.7-i586-virt.iso",
+    $vyosimagepath = "C:\ISO\vyos-1.1.8-amd64.iso",
     $Ex_vyos01_name = "ExVyOS01",
     $Ex_vyos02_name = "ExVyOS02",
     $SiteA_vyos01_name = "SiteAVyOS01",
@@ -43,7 +43,6 @@ New-VHD -Path "$vhdpath$SiteA_vyos02_name.vhdx" -SizeBytes $init_ALL_vyosVHDSize
 New-VHD -Path "$vhdpath$SiteB_vyos01_name.vhdx" -SizeBytes $init_ALL_vyosVHDSize
 
 #Create VM
-
 New-VM -Name $Ex_vyos01_name -MemoryStartupBytes $init_External_vyosmemorySize `
 -VHDPath "$vhdpath$Ex_vyos01_name.vhdx" `
 -Generation 1 -BootDevice CD
@@ -79,31 +78,31 @@ Set-VMDvdDrive $SiteB_vyos01_name -Path $vyosimagepath
 Add-VMNetworkAdapter $Ex_vyos01_name -Name $EXTNetworkAdapter01
 Add-VMNetworkAdapter $Ex_vyos01_name -Name $CORNetworkAdapter01
 Add-VMNetworkAdapter $Ex_vyos01_name -Name $DMZNetworkAdapter01
-Connect-VMNetworkAdapter  $Ex_vyos01_name -Name $EXTNetworkAdapter01 -SwitchName $EXTSwitchname01
-Connect-VMNetworkAdapter  $Ex_vyos01_name -Name $CORNetworkAdapter01 -SwitchName $CORSwitchname01
-Connect-VMNetworkAdapter  $Ex_vyos01_name -Name $DMZNetworkAdapter01 -SwitchName $DMZSwitchname01
+Connect-VMNetworkAdapter -VMName $Ex_vyos01_name -Name $EXTNetworkAdapter01 -SwitchName $EXTSwitchname01
+Connect-VMNetworkAdapter -VMName $Ex_vyos01_name -Name $CORNetworkAdapter01 -SwitchName $CORSwitchname01
+Connect-VMNetworkAdapter -VMName $Ex_vyos01_name -Name $DMZNetworkAdapter01 -SwitchName $DMZSwitchname01
 
 Add-VMNetworkAdapter $Ex_vyos02_name -Name $EXTNetworkAdapter01
 Add-VMNetworkAdapter $Ex_vyos02_name -Name $CORNetworkAdapter01
 Add-VMNetworkAdapter $Ex_vyos02_name -Name $DMZNetworkAdapter01
-Connect-VMNetworkAdapter  $Ex_vyos02_name -Name $EXTNetworkAdapter01 -SwitchName $EXTSwitchname01
-Connect-VMNetworkAdapter  $Ex_vyos02_name -Name $CORNetworkAdapter01 -SwitchName $CORSwitchname01
-Connect-VMNetworkAdapter  $Ex_vyos02_name -Name $DMZNetworkAdapter01 -SwitchName $DMZSwitchname01
+Connect-VMNetworkAdapter -VMName $Ex_vyos02_name -Name $EXTNetworkAdapter01 -SwitchName $EXTSwitchname01
+Connect-VMNetworkAdapter -VMName $Ex_vyos02_name -Name $CORNetworkAdapter01 -SwitchName $CORSwitchname01
+Connect-VMNetworkAdapter -VMName $Ex_vyos02_name -Name $DMZNetworkAdapter01 -SwitchName $DMZSwitchname01
 
 Add-VMNetworkAdapter $SiteA_vyos01_name -Name $CORNetworkAdapter01
 Add-VMNetworkAdapter $SiteA_vyos01_name -Name $INTNetworkAdapter01
-Connect-VMNetworkAdapter  $SiteA_vyos01_name -Name $CORNetworkAdapter01 -SwitchName $CORSwitchname01
-Connect-VMNetworkAdapter  $SiteA_vyos01_name -Name $INTNetworkAdapter01 -SwitchName $siteA_INTSwitchname01
+Connect-VMNetworkAdapter -VMName $SiteA_vyos01_name -Name $CORNetworkAdapter01 -SwitchName $CORSwitchname01
+Connect-VMNetworkAdapter -VMName $SiteA_vyos01_name -Name $INTNetworkAdapter01 -SwitchName $siteA_INTSwitchname01
 
 Add-VMNetworkAdapter $SiteA_vyos02_name -Name $CORNetworkAdapter01
 Add-VMNetworkAdapter $SiteA_vyos02_name -Name $INTNetworkAdapter01
-Connect-VMNetworkAdapter  $SiteA_vyos02_name -Name $CORNetworkAdapter01 -SwitchName $CORSwitchname01
-Connect-VMNetworkAdapter  $SiteA_vyos02_name -Name $INTNetworkAdapter01 -SwitchName $siteA_INTSwitchname01
+Connect-VMNetworkAdapter -VMName $SiteA_vyos02_name -Name $CORNetworkAdapter01 -SwitchName $CORSwitchname01
+Connect-VMNetworkAdapter -VMName $SiteA_vyos02_name -Name $INTNetworkAdapter01 -SwitchName $siteA_INTSwitchname01
 
 Add-VMNetworkAdapter $SiteB_vyos01_name -Name $CORNetworkAdapter01
 Add-VMNetworkAdapter $SiteB_vyos01_name -Name $INTNetworkAdapter01
-Connect-VMNetworkAdapter  $SiteB_vyos01_name -Name $CORNetworkAdapter01 -SwitchName $CORSwitchname01
-Connect-VMNetworkAdapter  $SiteB_vyos01_name -Name $INTNetworkAdapter01 -SwitchName $siteB_INTSwitchname01
+Connect-VMNetworkAdapter -VMName $SiteB_vyos01_name -Name $CORNetworkAdapter01 -SwitchName $CORSwitchname01
+Connect-VMNetworkAdapter -VMName $SiteB_vyos01_name -Name $INTNetworkAdapter01 -SwitchName $siteB_INTSwitchname01
 
 
 Get-VM | Where-Object {$_.Name -like "*VyOS*"} | Start-VM
